@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using RenaciendoWebAPI.Datos;
 using RenaciendoWebAPI.Models;
 using RenaciendoWebAPI.Models.Dtos;
+using RenaciendoWebAPI.Repositories.IRepository;
+using System.Net;
 
 namespace RenaciendoWebAPI.Controllers
 {
@@ -12,44 +14,91 @@ namespace RenaciendoWebAPI.Controllers
     public class RenacerController : ControllerBase
     {
         private readonly ILogger<RenacerController> _logger;
-        private readonly RenacerContext _renacerContext;
+        private readonly IRenacerRepository _renacerRepository;
         private readonly IMapper _mapper;
+        protected APIResponse _response;
 
-        public RenacerController(ILogger<RenacerController> logger, RenacerContext renacerContext, IMapper mapper)
+        public RenacerController(ILogger<RenacerController> logger, IRenacerRepository renacerRepository, IMapper mapper)
         {
             _logger = logger;
-            _renacerContext = renacerContext;
+            _renacerRepository = renacerRepository;
             _mapper = mapper;
+            _response = new();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RenacerDTO>>> GetRenacer()
+        public async Task<ActionResult<APIResponse>> GetRenacer()
         {
-            _logger.LogInformation("Vamos por todas");
-            var renaceres = await _renacerContext.Renaceres.AsNoTracking().ToListAsync();
-            return Ok(_mapper.Map<IEnumerable<RenacerDTO>>(renaceres));
+            try
+            {
+                _logger.LogInformation("Vamos por todas");
+                var renaceres = await _renacerRepository.GetAllAsync();
+                if (renaceres is not null)
+                {
+                    _response.IsSuccess = true;
+                    _response.StatusCode = HttpStatusCode.OK;
+                    _response.Result = _mapper.Map<IEnumerable<RenacerDTO>>(renaceres);
+                    return Ok(_response);
+                }
+                else
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string>() { ex.Message.ToString() };
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+            }
+            return _response;
         }
 
         [HttpGet("{RenacerId:int}", Name = "GetRenacerById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public ActionResult<RenacerDTO> GetRenacerById(int RenacerId)
+        public async Task<ActionResult<APIResponse>> GetRenacerById(int RenacerId)
         {
-            if (RenacerId == 0) { return BadRequest(); }
-            var renacer = _renacerContext.Renaceres.FirstOrDefault(r => r.RenacerId == RenacerId);
-            if (renacer == null) { return NotFound(); }
-            return Ok(_mapper.Map<RenacerDTO>(renacer));
+            try
+            {
+                if (RenacerId == 0)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                var renacer = await _renacerRepository.GetAsync(r => r.RenacerId == RenacerId);
+                if (renacer == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(_response);
+                }
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.Result = _mapper.Map<RenacerDTO>(renacer);
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorsMessages = new List<string>() { ex.Message.ToString() };
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+            }
+            return _response;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<RenacerDTO> CrearRenacer([FromBody] RenacerDTO renacerDTO)
+        public async Task<ActionResult<RenacerDTO>> CrearRenacer([FromBody] RenacerDTO renacerDTO)
         {
             if (!ModelState.IsValid) { return BadRequest(renacerDTO); }
-            var existe = _renacerContext.Renaceres.FirstOrDefault(p => p.Nombre!.ToLower() == renacerDTO.Nombre!.ToLower());
+            var existe = await _renacerRepository.GetAsync(p => p.Nombre!.ToLower() == renacerDTO.Nombre!.ToLower());
             if (existe is not null)
             {
                 ModelState.AddModelError("ExisteRenacer", "Ya existe en la Base de datos");
@@ -74,11 +123,11 @@ namespace RenaciendoWebAPI.Controllers
                 FechaCreacion = DateTime.Now
             };
 
-            _renacerContext.Renaceres.Add(
+            await _renacerRepository.CreateAsync(
                 nuevo
                 );
 
-            _renacerContext.SaveChanges();
+            await _renacerRepository.SaveChangesAsync();
 
             return CreatedAtRoute("GetRenacerById", new { RenacerId = nuevo.RenacerId }, nuevo);
         }
@@ -87,13 +136,13 @@ namespace RenaciendoWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Delete(int RenacerId)
+        public async Task<IActionResult> Delete(int RenacerId)
         {
             if (RenacerId == 0) { return BadRequest(); }
-            var existe = _renacerContext.Renaceres.FirstOrDefault(r => r.RenacerId == RenacerId);
+            var existe = await _renacerRepository.GetAsync(r => r.RenacerId == RenacerId);
             if (existe == null) { return NotFound(); }
-            _renacerContext.Renaceres.Remove(existe);
-            _renacerContext.SaveChanges();
+            await _renacerRepository.DeleteAsync(existe);
+            await _renacerRepository.SaveChangesAsync();
             return NoContent();
         }
 
@@ -101,25 +150,22 @@ namespace RenaciendoWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult UpdateRenacer(int RenacerId, [FromBody] RenacerDTO renacerDTO)
+        public async Task<IActionResult> UpdateRenacer(int RenacerId, [FromBody] RenacerDTO renacerDTO)
         {
             if (renacerDTO is null || RenacerId != renacerDTO.RenacerId)
             {
                 return BadRequest(renacerDTO);
             }
-            var renacer = _renacerContext.Renaceres.FirstOrDefault(r => r.RenacerId == RenacerId);
+            var renacer = _renacerRepository.GetAsync(r => r.RenacerId == RenacerId).Result;
             if (renacer is null) { return NotFound(); }
-            
+
             renacer.Amenidad = renacerDTO.Amenidad;
             renacer.Dimension = renacerDTO.Dimension;
             renacer.ImageURL = renacerDTO.ImageURL;
             renacer.Detalle = renacerDTO.Detalle;
             renacer.Nombre = renacerDTO.Nombre;
-            renacer.FechaActualizacion = DateTime.Now;
 
-
-            _renacerContext.Renaceres.Update(renacer);
-            _renacerContext.SaveChanges();
+            await _renacerRepository.UpdateAsync(renacer);
 
             return NoContent();
 

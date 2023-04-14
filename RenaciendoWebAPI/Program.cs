@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using RenaciendoWebAPI.Datos;
 using RenaciendoWebAPI.Mapper;
+using RenaciendoWebAPI.Repositories;
+using RenaciendoWebAPI.Repositories.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<RenacerContext>(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+builder.Services.AddScoped<IRenacerRepository, RenacerRepository>();
 
 var app = builder.Build();
 
