@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RenaciendoWebAPI.Datos;
+using RenaciendoWebAPI.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<RenacerContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("RenacerCNN"));
 });
+
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RenaciendoWebAPI.Datos;
 using RenaciendoWebAPI.Models;
 using RenaciendoWebAPI.Models.Dtos;
@@ -12,18 +13,21 @@ namespace RenaciendoWebAPI.Controllers
     {
         private readonly ILogger<RenacerController> _logger;
         private readonly RenacerContext _renacerContext;
+        private readonly IMapper _mapper;
 
-        public RenacerController(ILogger<RenacerController> logger, RenacerContext renacerContext)
+        public RenacerController(ILogger<RenacerController> logger, RenacerContext renacerContext, IMapper mapper)
         {
             _logger = logger;
             _renacerContext = renacerContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<RenacerDTO>> GetRenacer()
+        public async Task<ActionResult<IEnumerable<RenacerDTO>>> GetRenacer()
         {
             _logger.LogInformation("Vamos por todas");
-            return Ok(_renacerContext.Renaceres);
+            var renaceres = await _renacerContext.Renaceres.AsNoTracking().ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<RenacerDTO>>(renaceres));
         }
 
         [HttpGet("{RenacerId:int}", Name = "GetRenacerById")]
@@ -35,7 +39,7 @@ namespace RenaciendoWebAPI.Controllers
             if (RenacerId == 0) { return BadRequest(); }
             var renacer = _renacerContext.Renaceres.FirstOrDefault(r => r.RenacerId == RenacerId);
             if (renacer == null) { return NotFound(); }
-            return Ok(renacer);
+            return Ok(_mapper.Map<RenacerDTO>(renacer));
         }
 
         [HttpPost]
