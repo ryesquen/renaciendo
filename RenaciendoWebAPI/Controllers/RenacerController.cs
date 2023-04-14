@@ -31,7 +31,7 @@ namespace RenaciendoWebAPI.Controllers
         {
             try
             {
-                _logger.LogInformation("Vamos por todas!!!!!");
+                _logger.LogInformation("Vamos por todas!!!");
                 var renaceres = await _renacerRepository.GetAllAsync();
                 if (renaceres is not null)
                 {
