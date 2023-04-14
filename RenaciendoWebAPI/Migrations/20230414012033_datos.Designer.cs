@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RenaciendoWebAPI.Datos;
 
@@ -11,9 +12,11 @@ using RenaciendoWebAPI.Datos;
 namespace RenaciendoWebAPI.Migrations
 {
     [DbContext(typeof(RenacerContext))]
-    partial class RenacerContextModelSnapshot : ModelSnapshot
+    [Migration("20230414012033_datos")]
+    partial class datos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
