@@ -1,8 +1,8 @@
 ﻿using Dapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using MySQLDapper.Models;
+using System.Data;
 
 namespace MySQLDapper.Controllers
 {
@@ -16,7 +16,7 @@ namespace MySQLDapper.Controllers
             var query = "Select Id, Nombre , Email  From Personas p;";
             var cs = "Server = localhost; Port = 3306; Database = Dapper; Uid = root; Pwd = _RE41Nz000";
 
-            using var db = new MySqlConnection(cs);
+            using IDbConnection db = new MySqlConnection(cs);
             return Ok(db.Query<Persona>(query).ToList());
 
 
