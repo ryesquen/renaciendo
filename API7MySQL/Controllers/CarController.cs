@@ -33,7 +33,7 @@ namespace API7MySQL.Controllers
             if (car is null) { return BadRequest(); }
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             var created = await _carRepository.InsertCar(car);
-            return Created("created", created); ;
+            return Created("created", created);
         }
 
         [HttpPut("{id:int}")]
