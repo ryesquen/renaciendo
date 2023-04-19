@@ -21,6 +21,19 @@ namespace MongoDBNetCore.Controllers
             return Ok(await _productCollection.GetAllProducts());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProductById(string id)
+        {
+            var product = await _productCollection.GetProductById(id);
+
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            return product;
+        }
+
         [HttpPost]
         public async Task<IActionResult> InsertCar([FromBody] Product product)
         {
