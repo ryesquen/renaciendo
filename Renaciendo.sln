@@ -21,13 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDBNetCore", "MongoDBNetCore\MongoDBNetCore.csproj", "{143392B6-250D-49DB-B224-32D5D3495D6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeByte", "CodeByte\CodeByte.csproj", "{A940B5A9-C194-40B2-B29B-952B1DC894A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeByte", "CodeByte\CodeByte.csproj", "{A940B5A9-C194-40B2-B29B-952B1DC894A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleWebAPI", "OracleWebAPI\OracleWebAPI.csproj", "{DE789B46-CA39-48A0-9837-B8275DE94DBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleWebAPI", "OracleWebAPI\OracleWebAPI.csproj", "{DE789B46-CA39-48A0-9837-B8275DE94DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleWebAPI.Data", "OracleWebAPI.Data\OracleWebAPI.Data.csproj", "{8A33608A-BC80-4F80-9562-61998B99D7A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleWebAPI.Data", "OracleWebAPI.Data\OracleWebAPI.Data.csproj", "{8A33608A-BC80-4F80-9562-61998B99D7A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleWebAPI.Services", "OracleWebAPI.Services\OracleWebAPI.Services.csproj", "{3E9E2C18-8F42-402A-A9CE-647F089367AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleWebAPI.Services", "OracleWebAPI.Services\OracleWebAPI.Services.csproj", "{3E9E2C18-8F42-402A-A9CE-647F089367AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleWebAPI.DTO", "OracleWebAPI.DTO\OracleWebAPI.DTO.csproj", "{4396EC0F-F0C1-4206-82F2-1BB4160CF031}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{3E9E2C18-8F42-402A-A9CE-647F089367AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E9E2C18-8F42-402A-A9CE-647F089367AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E9E2C18-8F42-402A-A9CE-647F089367AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4396EC0F-F0C1-4206-82F2-1BB4160CF031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4396EC0F-F0C1-4206-82F2-1BB4160CF031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4396EC0F-F0C1-4206-82F2-1BB4160CF031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4396EC0F-F0C1-4206-82F2-1BB4160CF031}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

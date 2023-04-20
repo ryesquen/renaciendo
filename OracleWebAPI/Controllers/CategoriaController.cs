@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OracleWebAPI.Data.Models;
+using OracleWebAPI.DTO;
 using OracleWebAPI.Services;
-using System.Net;
 
 namespace OracleWebAPI.Controllers
 {
@@ -18,10 +17,14 @@ namespace OracleWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<ActionResult<List<CategoriaDTO>>> GetCategories()
         {
             var response = await _categoriaService.GetAllCategories();
-            if (response.Object is not null) return Ok(response);
+            if (response.Object is not null)
+            {
+                var res = response.Object.Select(Mappings.Mappings.DataBaseObjectToDTO).ToList();
+                return Ok(res);
+            }
             else return StatusCode(response.Status, response.Error);
         }
 

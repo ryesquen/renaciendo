@@ -1,6 +1,6 @@
-﻿namespace OracleWebAPI.Data.Models
+﻿namespace OracleWebAPI.DTO
 {
-    public partial class Categoria
+    public class CategoriaDTO
     {
         public decimal Id { get; set; }
         public string? Descripcion { get; set; }
