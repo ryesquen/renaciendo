@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDBNetCore", "MongoDBNe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeByte", "CodeByte\CodeByte.csproj", "{A940B5A9-C194-40B2-B29B-952B1DC894A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleWebAPI", "OracleWebAPI\OracleWebAPI.csproj", "{DE789B46-CA39-48A0-9837-B8275DE94DBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OracleWebAPI.Data", "OracleWebAPI.Data\OracleWebAPI.Data.csproj", "{8A33608A-BC80-4F80-9562-61998B99D7A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{A940B5A9-C194-40B2-B29B-952B1DC894A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A940B5A9-C194-40B2-B29B-952B1DC894A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A940B5A9-C194-40B2-B29B-952B1DC894A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE789B46-CA39-48A0-9837-B8275DE94DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE789B46-CA39-48A0-9837-B8275DE94DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE789B46-CA39-48A0-9837-B8275DE94DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE789B46-CA39-48A0-9837-B8275DE94DBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A33608A-BC80-4F80-9562-61998B99D7A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A33608A-BC80-4F80-9562-61998B99D7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A33608A-BC80-4F80-9562-61998B99D7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A33608A-BC80-4F80-9562-61998B99D7A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

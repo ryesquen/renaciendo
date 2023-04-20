@@ -2,27 +2,36 @@
 using System.Net;
 using System.Text;
 using System.IO;
+using System;
 
 public class MainClass
 {
 
     public static void Main()
     {
-
-        WebClient client = new WebClient();
-        string s = client.DownloadString("https://coderbyte.com/api/challenges/json/json-cleaning");
-        using (Stream data = new MemoryStream(Encoding.UTF8.GetBytes(s)))
+        try
         {
-            StreamReader read = new StreamReader(data);
-            string text = read.ReadToEnd();
-            dynamic json = JObject.Parse(text);
-            RemoveJson(json["name"]);
-            RemoveJson(json["age"]);
-            RemoveJson(json["DOB"]);
-            RemoveJson(json["hobbies"]);
-            RemoveJson(json["education"]);
-            Console.WriteLine(json);
+            WebClient client = new WebClient();
+            string s = client.DownloadString("https://coderbyte.com/api/challenges/json/json-cleaning");
+            using (Stream data = new MemoryStream(Encoding.UTF8.GetBytes(s)))
+            {
+                StreamReader read = new StreamReader(data);
+                string text = read.ReadToEnd();
+                dynamic json = JObject.Parse(text);
+                RemoveJson(json["name"]);
+                RemoveJson(json["age"]);
+                RemoveJson(json["DOB"]);
+                RemoveJson(json["hobbies"]);
+                RemoveJson(json["education"]);
+                Console.WriteLine(json);
+            }
         }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex.Message);
+        }
+
 
     }
     static string RemoveJson(dynamic node)
