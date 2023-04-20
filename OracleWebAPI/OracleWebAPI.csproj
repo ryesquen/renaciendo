@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OracleWebAPI.Data\OracleWebAPI.Data.csproj" />
+    <ProjectReference Include="..\OracleWebAPI.Services\OracleWebAPI.Services.csproj" />
   </ItemGroup>
 
 </Project>
