@@ -2,6 +2,7 @@
 using BancoAPI.Domain.Common;
 using BancoAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace BancoAPI.Persistence.Contexts
 {
@@ -31,6 +32,9 @@ namespace BancoAPI.Persistence.Contexts
             }
             return base.SaveChangesAsync(cancellationToken);
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
 }

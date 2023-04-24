@@ -1,10 +1,13 @@
 using BancoAPI.Application;
 using BancoAPI.Persistence;
+using BancoAPI.Shared;
+using BancoAPI.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersintenceInfrastructure(builder.Configuration);
+builder.Services.AddShareInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +24,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseErrorHandlingMiddelware();
 
 app.MapControllers();
 
