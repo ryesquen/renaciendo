@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BancoAPI.Application\BancoAPI.Application.csproj" />
+    <ProjectReference Include="..\BancoAPI.Persintence\BancoAPI.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
