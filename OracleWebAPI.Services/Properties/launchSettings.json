@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "OracleWebAPI.Services": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:49266;http://localhost:49267"
+    }
+  }
+}

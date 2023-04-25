@@ -20,6 +20,7 @@
     <ProjectReference Include="..\BancoAPI.Application\BancoAPI.Application.csproj" />
     <ProjectReference Include="..\BancoAPI.Persintence\BancoAPI.Persistence.csproj" />
     <ProjectReference Include="..\BancoAPI.Shared\BancoAPI.Shared.csproj" />
+    <ProjectReference Include="..\Identity\Identity.csproj" />
   </ItemGroup>
 
 </Project>
