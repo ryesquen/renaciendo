@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BancoAPI.Application.DTOs;
 using BancoAPI.Application.Features.Clients.Commands;
 using BancoAPI.Domain.Entities;
 
@@ -9,7 +10,8 @@ namespace BancoAPI.Application.Mappings
         public GeneralProfile()
         {
             #region
-            CreateMap<CreateClientCommand, Client>();
+            CreateMap<CreateClientCommand, Client>().ReverseMap();
+            CreateMap<ClientDTO, Client>().ReverseMap();
             #endregion
         }
     }
