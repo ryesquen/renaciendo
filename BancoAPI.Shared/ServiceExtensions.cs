@@ -7,7 +7,7 @@ namespace BancoAPI.Shared
 {
     public static class ServiceExtensions
     {
-        public static void AddShareInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static void AddShareInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<IDateTimeService, DateTimeService>();
         }

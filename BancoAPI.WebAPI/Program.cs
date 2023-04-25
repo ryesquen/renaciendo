@@ -6,9 +6,10 @@ using BancoAPI.WebAPI.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationLayer();
+builder.Services.AddShareInfrastructure();
 builder.Services.AddPersintenceInfrastructure(builder.Configuration);
-builder.Services.AddShareInfrastructure(builder.Configuration);
 
+builder.Services.AddApiVersionExtensions();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
