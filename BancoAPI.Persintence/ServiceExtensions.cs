@@ -18,6 +18,12 @@ namespace BancoAPI.Persistence
                         b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
                 });
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(MyRepositoryAsync<>));
+
+            services.AddStackExchangeRedisCache(
+                options =>
+                {
+                    options.Configuration = configuration.GetValue<string>("Caching:RedisConnection");
+                });
         }
     }
 }
