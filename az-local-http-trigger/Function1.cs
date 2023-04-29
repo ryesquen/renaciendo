@@ -26,8 +26,7 @@ namespace az_local_http_trigger
             name = name ?? data?.name;
 
             string responseMessage = string.IsNullOrEmpty(name)
-                ? "falta ..."
-                : $"Qué hay, {name}.?";
+                ? "falta ..." : $"Qué hay, {name}.?";
 
             return new OkObjectResult(responseMessage);
         }
